@@ -57,3 +57,27 @@ SELECT payment.payment_id, payment.amount, rental.rental_date
 FROM rental 
 RIGHT JOIN payment 
 ON rental.rental_id = payment.rental_id;
+--u každého filmu vypište jazyk filmu, pokud jazyk začíná na "I". 
+--V opačném případě vypište jazyk NULL
+SELECT film.title, language.name
+FROM film 
+LEFT JOIN language on film.language_id = language.language_id
+AND language.name LIKE 'I%';
+--pro každý rok vypište počet filmů, které byly v vdaném roce vydány
+SELECT release_year, COUNT(*)
+FROM  film
+GROUP BY release_year;
+--pro každý rating vypište počet filmů
+SELECT rating, COUNT(*) AS 'počet filmů'
+FROM  film
+GROUP BY rating;
+--vypište ID zákazníků setříděných podle součtů jejich plateb
+SELECT customer_id, SUM(amount) AS 'zaplaceno'
+FROM payment
+GROUP BY customer_id
+ORDER BY zaplaceno DESC;
+--vypište ID skladů s více než 2300 kopiemi
+SELECT store_id, count(*)
+FROM inventory
+GROUP BY store_id
+having count(*)>2300;
